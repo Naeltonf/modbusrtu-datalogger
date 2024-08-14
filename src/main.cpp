@@ -2,6 +2,7 @@
 #include <SoftwareSerial.h>
 
 #define SLAVE_ID 1
+//numero inicial
 //#define FIRST_REG 15
 #define FIRST_REG 107
 #define REG_COUNT 6
