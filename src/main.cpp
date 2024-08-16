@@ -4,8 +4,8 @@
 #include "LEDfuncition.h"
 
 #define SLAVE_ID 1
-#define FIRST_REG 107
-#define REG_COUNT 6
+#define FIRST_REG 103
+#define REG_COUNT 8
 #define D1 26
 #define D2 25
 #define PIN_SERIAL 17
@@ -91,18 +91,24 @@ void loop() {
             // Criação de um buffer String para armazenar todos os dados
             String dataBuffer = "";
 
-            dataBuffer += "AL 09: " + String(res[0]) + "\n";
-            dataBuffer += "AL 10: " + String(res[1]) + "\n";
-            dataBuffer += "AL 11: " + String(res[2]) + "\n";
-            dataBuffer += "AL 12: " + String(res[3]) + "\n";
+            dataBuffer += "AL V 05: " + String(res[0]) + "\n";
+            dataBuffer += "AL V 06: " + String(res[1]) + "\n";
+            dataBuffer += "AL V 07: " + String(res[2]) + "\n";
+            dataBuffer += "AL V 08: " + String(res[3]) + "\n";
+            dataBuffer += "AL mA 09: " + String(res[4]) + "\n";
+            dataBuffer += "AL mA 10: " + String(res[5]) + "\n";
+            dataBuffer += "AL mA 11: " + String(res[6]) + "\n";
+            dataBuffer += "AL mA 12: " + String(res[7]) + "\n";
 
             float f_res1 = integer_to_float(res[0], res[1]);
             float f_res2 = integer_to_float(res[2], res[3]);
             float f_res3 = integer_to_float(res[4], res[5]);
+            float f_res4 = integer_to_float(res[6], res[7]);
 
             // Enviar todos os dados de uma só vez
             serialTransparente.print(dataBuffer);
             Serial.println("Dados enviados via RF:");
+            Serial.println(dataBuffer);
             
             blinkLED(LED_RF, 300); // Pisca o LED para indicar que houve envio de dados via RF
             dataBuffer = ""; // Limpar o buffer após enviar os dados
