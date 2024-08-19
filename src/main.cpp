@@ -27,30 +27,60 @@ AsyncWebServer server(80);
 // HTML e CSS como strings
 const char *htmlHeader = R"rawliteral(
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Dados Coletados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface de Comunicação LoRaWAN</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #f0f4f8; /* Cor de fundo clara */
+            color: #333; /* Cor do texto principal */
+        }
+        header {
+            background-color: #007bff; /* Azul mais vibrante para o cabeçalho */
+            color: #ffffff; /* Texto branco */
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         h1 {
-            color: #4CAF50;
-            text-align: center;
+            margin: 0;
+            font-size: 1.25rem; 
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            height: calc(100vh - 120px); 
+            padding: 20px;
+            margin-top: 15px; 
         }
         pre {
-            background: #fff;
+            background: #ffffff;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-            white-space: pre-wrap; /* Permite a quebra de linha no conteúdo */
+            white-space: pre-wrap; 
+            font-size: 14px; 
+            line-height: 1.6; 
+            overflow-x: auto; 
+        }
+        footer {
+            background-color: #007bff; /* Azul para o rodapé */
+            color: #ffffff; /* Texto branco */
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
     <script>
@@ -68,11 +98,19 @@ const char *htmlHeader = R"rawliteral(
     </script>
 </head>
 <body>
-    <h1>Dados Coletados</h1>
-    <pre id="data">Carregando...</pre>
+    <header>
+        <h1>Interface de Comunicação LoRaWAN</h1>
+    </header>
+    <main>
+        <pre id="data">Carregando...</pre>
+    </main>
+    <footer>
+        <p>Itaipu parquetec | Vetorlog</p>
+    </footer>
 </body>
 </html>
 )rawliteral";
+
 
 bool cb(Modbus::ResultCode event, uint16_t transactionId, void *data)
 {
@@ -187,14 +225,14 @@ void loop()
             // Criação de um buffer String para armazenar todos os dados
             String dataStr = "";
 
-            dataStr += "AL V 05: " + String(res[0]) + "\n";
-            dataStr += "AL V 06: " + String(res[1]) + "\n";
-            dataStr += "AL V 07: " + String(res[2]) + "\n";
-            dataStr += "AL V 08: " + String(res[3]) + "\n";
-            dataStr += "AL mA 09: " + String(res[4]) + "\n";
-            dataStr += "AL mA 10: " + String(res[5]) + "\n";
-            dataStr += "AL mA 11: " + String(res[6]) + "\n";
-            dataStr += "AL mA 12: " + String(res[7]) + "\n";
+            dataStr += "AI V 05: " + String(res[0]) + "\n";
+            dataStr += "AI V 06: " + String(res[1]) + "\n";
+            dataStr += "AI V 07: " + String(res[2]) + "\n";
+            dataStr += "AI V 08: " + String(res[3]) + "\n";
+            dataStr += "AI mA 09: " + String(res[4]) + "\n";
+            dataStr += "AI mA 10: " + String(res[5]) + "\n";
+            dataStr += "AI mA 11: " + String(res[6]) + "\n";
+            dataStr += "AI mA 12: " + String(res[7]) + "\n";
 
             float f_res1 = integer_to_float(res[0], res[1]);
             float f_res2 = integer_to_float(res[2], res[3]);
